@@ -1,0 +1,8 @@
+### Ejemplo de Bind Volume
+docker container run \
+--name nest-app \
+-w /app \
+-p 3000:3000 \
+-v "$(pwd)":/app \
+node:18.20.8-alpine3.21 \
+sh -c "yarn install && yarn start:dev"

@@ -1,0 +1,15 @@
+services:
+  frontend_react_app:
+    container_name: frontend_react_app
+    image: node:22.22.0-alpine3.23
+    working_dir: /front-react-app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front-react-app:/front-react-app
+      - /front-react-app/node_modules
+    restart: always
+    stdin_open: true
+    tty: true
+    # command: sh -c "npm install && npm run dev"  # Ejecutar esta linea solo la primera vez cuando no existe el contenedor
+    command: sh -c "npm run dev"  # Dejar esta si el contenedor ya existe y tiene los modulos instalados

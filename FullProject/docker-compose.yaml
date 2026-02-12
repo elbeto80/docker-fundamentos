@@ -1,0 +1,15 @@
+services:
+  frontend_react_app:
+    container_name: frontend_react_app
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front-react-app:/front-react-app
+      - node_modules:/front-react-app/node_modules
+    restart: always
+    stdin_open: true
+    tty: true
+
+volumes:
+  node_modules:

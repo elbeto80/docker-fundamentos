@@ -1,0 +1,72 @@
+##### Conceptos basicos #####
+- Volume name: Volumen para relacionar con el contenedor
+- Volume bind: relaciona carpetas entre el host y el contenedor
+
+
+##### Terminal deontro del contenedor  #####
+docker exec -it CONTAINER_NAME bash
+docker exec -it CONTAINER_NAME /bin/sh
+
+
+##### Basicos comandos #####
+docker image
+docker image tag NOMBRE_IMAGEN[:TAG] NUEVO_NOMBRE_IMAGEN[:TAG] # crea una nueva imagen con el nombre y tag especificado
+docker container
+docker volume
+docker network
+docker compose
+	- up # levanta los servicios
+	- down # detiene y elimina los contenedores, agrega "-v" para eliminar los volúmenes
+	- logs -f # muestra los logs de los servicios en tiempo real
+	- start # levanta los servicios si ya estan detenidos
+	- stop # detiene los servicios que estan levantados
+	- restart #reinicia los servicios
+
+docker compose -f docker-compose.prod.yml up # Especificar cual docker-compose.yml se va a usar y levantar los servicios
+
+docker build --tag NOMBRE_IMAGEN[:TAG] . # Crea una imagen a partir de un Dockerfile
+docker build --no-cache -t NOMBRE_IMAGEN[:TAG] . # Hacer esto de vez en cuando para evitar usar la cache de la imagen
+docker compose build # Construye las imagenes de los servicios
+docker compose build [SERVICE] # Construye las imagenes del servicio especificado
+docker compose -f docker-compose.prod.yml build # Construye las imagenes de los servicios para el docker-compose.prod.yml
+
+docker buildx # Crear la imagen para usar en diferentes plataformas (S.O.)
+docker buildx create --name multiplaform-builder --use  # 
+docker buildx inspect  # Muestra información del builder
+docker buildx inspect --bootstrap  # Inicializa (si es necesario) el builder y luego muestra información
+# Crear la imagen para usar en diferentes plataformas (S.O.)
+docker buildx build \
+  --platform linux/amd64,linux/arm64,linux/arm64 \
+  -t USUARIO_DOCKER/NOMBRE_IMAGEN[:TAG] \
+  -t USUARIO_DOCKER/NOMBRE_IMAGEN[:TAG] \
+  --push \
+  .
+
+
+##### Mysql y phpmyadmin en la misma red #####
+docker container run --name mysql-test \
+-e MYSQL_ROOT_PASSWORD=12121212 \
+-e MYSQL_USER=beto \
+-e MYSQL_PASSWORD=12121212 \
+-e MYSQL_DATABASE=world-db \
+-v mysql-db:/var/lib/mysql \
+--net mysql-red \
+-dp 3306:3306 mysql:8.0.45
+
+docker container run --name phpmyadmin \
+-d -e PMA_HOST=dbhost \
+-e PMA_ARBITRARY=1 \
+-p 8080:80 \
+--net mysql-red \
+phpmyadmin:5.2.0-apache
+
+
+##### Ejemplo bind volume compartiendo codigo con el docker #####
+docker container run \
+--name nest-app \
+-w /app \
+-p 3000:3000 \
+-v "$(pwd)":/app \
+node:18.20.8-alpine3.21 \
+sh -c "yarn install && yarn start:dev"
+
