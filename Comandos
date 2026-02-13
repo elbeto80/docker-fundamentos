@@ -43,6 +43,9 @@ docker buildx build \
   .
 
 
+#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&#
+#  Ejemplos básicos desde linea de comandos  #
+#&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&#
 ##### Mysql y phpmyadmin en la misma red #####
 docker container run --name mysql-test \
 -e MYSQL_ROOT_PASSWORD=12121212 \
