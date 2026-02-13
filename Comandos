@@ -36,7 +36,7 @@ docker buildx inspect  # Muestra información del builder
 docker buildx inspect --bootstrap  # Inicializa (si es necesario) el builder y luego muestra información
 # Crear la imagen para usar en diferentes plataformas (S.O.)
 docker buildx build \
-  --platform linux/amd64,linux/arm64,linux/arm64 \
+  --platform linux/amd64,linux/arm64 \
   -t USUARIO_DOCKER/NOMBRE_IMAGEN[:TAG] \
   -t USUARIO_DOCKER/NOMBRE_IMAGEN[:TAG] \
   --push \
