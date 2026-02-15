@@ -30,6 +30,8 @@ docker compose build # Construye las imagenes de los servicios
 docker compose build [SERVICE] # Construye las imagenes del servicio especificado
 docker compose -f docker-compose.prod.yml build # Construye las imagenes de los servicios para el docker-compose.prod.yml
 
+docker compose -f docker-compose.dev.yaml exec CONTAINER php artisan route:list  # Ejecutar un comando dentro del contanedor
+
 docker buildx # Crear la imagen para usar en diferentes plataformas (S.O.)
 docker buildx create --name multiplaform-builder --use  # 
 docker buildx inspect  # Muestra información del builder
